@@ -17,6 +17,8 @@
         <br />
         <input type="text" :value="inputValThroughMethod" @input="onInput"
             placeholder="Type here => assigned through method" size="50" />
+        <!-- <input type="text" v-model="inputValThroughMethod" placeholder="Type here => assigned through method"
+            size="50" /> -->
     </form>
     <p><span style="font-weight: 700 ;">Changed through event :</span> {{inputVal}}</p>
     <p><span style="font-weight: 700 ;">Changed through method :</span> {{inputValThroughMethod}}</p>
@@ -41,8 +43,8 @@
             increment() {
                 this.counter.count++
             },
-            onInput(event) {
-                this.inputValThroughMethod = event.target.value;
+            onInput(e) {
+                this.inputValThroughMethod = e.target.value;
             }
         }
     }).mount('#app')
