@@ -36,10 +36,23 @@
     <h2 v-else>Oh no 😢 it's not awesome!</h2>
     <button @click="toggleShowAwesome">Toggle show awesome</button>
 
+    <hr />
+
+    <h1>List rendering</h1>
+
+    <ol>
+        <li v-for="todo in todoList" :key="todo.id">
+            {{ todo.text }}
+        </li>
+    </ol>
+
+
 </div>
 
 <script>
     const { createApp } = Vue
+
+    let todoId = 0;
 
     createApp({
         data() {
@@ -52,7 +65,15 @@
                 inputVal: '',
                 inputValThroughMethod: '',
                 awesome: true,
-                showAwesome: true
+                showAwesome: true,
+                todoList: [
+                    { id: todoId++, text: 'Explore Vue used through CDN' },
+                    { id: todoId++, text: 'Explore Vue used through Options API' },
+                    { id: todoId++, text: 'Explore Vue used through Vite' },
+                    { id: todoId++, text: 'Explore Vue used through Composition API' },
+                    { id: todoId++, text: 'Explore Vue SPA' },
+                    { id: todoId++, text: 'Explore Vue SFC' }
+                ]
             }
         },
         methods: {
