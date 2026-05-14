@@ -7,6 +7,13 @@
     <p>Count is : {{counter.count}}</p>
     <button @click="increment">Increment</button>
     <button v-on:click="counter.count--">Decrement</button>
+
+    <hr />
+
+    <form>
+        <input type="text" :value="inputVal" @input="inputVal = $event.target.value" placeholder="Type here" />
+    </form>
+    <p>{{inputVal}}</p>
 </div>
 
 <script>
@@ -19,13 +26,15 @@
                 counter: {
                     count: 0
                 },
-                titleClass: 'title'
+                titleClass: 'title',
+                inputVal: ''
             }
         },
         methods: {
             increment() {
                 this.counter.count++
-            }
+            },
+
         }
     }).mount('#app')
 
