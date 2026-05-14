@@ -105,8 +105,9 @@
             removeTodo(id) {
                 this.todoList = this.todoList.filter(todo => todo.id !== id);
             },
-            addTodo() {
-
+            addTodo(e) {
+                //PREVENT THE FORM FROM BEING SUBMITTED AND SHOW | HIDE THE ADDED ELEMENT 
+                e.preventDefault();
                 if (!this.newListElement || this.newListElement.trim() === '') {
                     // alert("Please add a new todo element for the list");
                     //v-html BAD => EXPOSED TO XSS ATTACKS
