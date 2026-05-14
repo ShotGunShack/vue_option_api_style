@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="./style.css">
 
+
 <div id="app">
     <h1 :class="titleClass">{{message}}</h1>
     <p>Count is : {{counter.count}}</p>
@@ -30,6 +31,10 @@
     <h2 v-show="awesome">Vue is awesome!</h2>
     <button @click="awesome = !awesome">Toggle awesome</button>
 
+    <p> => Removing element from the dom</p>
+    <h2 v-if="showAwesome">Vue is awesome!</h2>
+    <h2 v-else>Oh no 😢 it's not awesome!</h2>
+    <button @click="toggleShowAwesome">Toggle show awesome</button>
 
 </div>
 
@@ -46,7 +51,8 @@
                 titleClass: 'title',
                 inputVal: '',
                 inputValThroughMethod: '',
-                awesome: true
+                awesome: true,
+                showAwesome: true
             }
         },
         methods: {
@@ -55,7 +61,10 @@
             },
             // onInput(e) {
             //     this.inputValThroughMethod = e.target.value;
-            // }
+            // },
+            toggleShowAwesome() {
+                this.showAwesome = !this.showAwesome;
+            }
 
         }
     }).mount('#app')
