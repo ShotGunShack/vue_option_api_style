@@ -42,7 +42,7 @@
 
     <ol>
         <li v-for="todo in todoList" :key="todo.id">
-            {{ todo.text }}
+            {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
         </li>
     </ol>
 
@@ -85,6 +85,9 @@
             // },
             toggleShowAwesome() {
                 this.showAwesome = !this.showAwesome;
+            },
+            removeTodo(id) {
+                this.todoList = this.todoList.filter(todo => todo.id !== id);
             }
 
         }
