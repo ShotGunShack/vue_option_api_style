@@ -45,14 +45,18 @@
             {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
         </li>
     </ol>
-    <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
-    <br />
-    <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
-    <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
 
-    <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
-    <br />
-    <button @click="addTodo">Add Todo</button>
+    <form @submit="addTodo">
+        <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
+        <br />
+        <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
+        <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
+
+        <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
+        <br />
+        <button>Add Todo</button>
+    </form>
+
 
 </div>
 
@@ -102,6 +106,7 @@
                 this.todoList = this.todoList.filter(todo => todo.id !== id);
             },
             addTodo() {
+
                 if (!this.newListElement || this.newListElement.trim() === '') {
                     // alert("Please add a new todo element for the list");
                     //v-html BAD => EXPOSED TO XSS ATTACKS
