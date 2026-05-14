@@ -36,10 +36,30 @@
     <h2 v-else>Oh no 😢 it's not awesome!</h2>
     <button @click="toggleShowAwesome">Toggle show awesome</button>
 
+    <hr />
+
+    <h1>List rendering</h1>
+
+    <ol>
+        <li v-for="todo in todoList" :key="todo.id">
+            {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
+        </li>
+    </ol>
+    <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
+    <br />
+    <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
+    <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
+
+    <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
+    <br />
+    <button @click="addTodo">Add Todo</button>
+
 </div>
 
 <script>
     const { createApp } = Vue
+
+    let todoId = 0;
 
     createApp({
         data() {
@@ -52,7 +72,20 @@
                 inputVal: '',
                 inputValThroughMethod: '',
                 awesome: true,
-                showAwesome: true
+                showAwesome: true,
+                todoList: [
+                    { id: todoId++, text: 'Explore Vue used through CDN' },
+                    { id: todoId++, text: 'Explore Vue used through Options API' },
+                    { id: todoId++, text: 'Explore Vue used through Vite' },
+                    { id: todoId++, text: 'Explore Vue used through Composition API' },
+                    { id: todoId++, text: 'Explore Vue SPA' },
+                    { id: todoId++, text: 'Explore Vue SFC' }
+                ],
+                newListElement: '',
+                emptyElmtErrMsgHtml: '',
+                emptyElmtErrMsgClass: 'emptyElmtErrMsg',
+                emptyMsg: false,
+                emptyElmtErrMsg: ''
             }
         },
         methods: {
@@ -64,6 +97,24 @@
             // },
             toggleShowAwesome() {
                 this.showAwesome = !this.showAwesome;
+            },
+            removeTodo(id) {
+                this.todoList = this.todoList.filter(todo => todo.id !== id);
+            },
+            addTodo() {
+                if (!this.newListElement || this.newListElement.trim() === '') {
+                    // alert("Please add a new todo element for the list");
+                    //v-html BAD => EXPOSED TO XSS ATTACKS
+                    // this.emptyElmtErrMsgHtml = "<i>Please add a new todo element for the list</i>";
+
+                    this.emptyMsg = true;
+                    this.emptyElmtErrMsg = "A new todo element for the list is required";
+
+                    return;
+                }
+                this.todoList.push({ id: todoId++, text: this.newListElement });
+                //RESET newListElement
+                this.newListElement = '';
             }
 
         }
