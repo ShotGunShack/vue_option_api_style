@@ -1,11 +1,22 @@
-<script type="module">
-    import { createApp } from 'vue'
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+    <h1>{{message}}</h1>
+    <p>Count is : {{counter.count}}</p>
+</div>
+
+<script>
+    const { createApp } = Vue
 
     createApp({
-
+        data() {
+            return {
+                message: '1st Declarative rendering withVue!',
+                counter: {
+                    count: 0
+                }
+            }
+        }
     }).mount('#app')
 
 </script>
-<div id="app">
-    <h1>Make me dynamic!</h1>>
-</div>
