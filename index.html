@@ -6,6 +6,7 @@
     <h1 :class="titleClass">{{message}}</h1>
     <p>Count is : {{counter.count}}</p>
     <button @click="increment">Increment</button>
+    <button v-on:click="counter.count--">Decrement</button>
 </div>
 
 <script>
