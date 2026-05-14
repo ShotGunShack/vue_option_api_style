@@ -45,7 +45,9 @@
             {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
         </li>
     </ol>
-
+    <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
+    <br />
+    <button @click="addTodo">Add Todo</button>
 
 </div>
 
@@ -73,7 +75,8 @@
                     { id: todoId++, text: 'Explore Vue used through Composition API' },
                     { id: todoId++, text: 'Explore Vue SPA' },
                     { id: todoId++, text: 'Explore Vue SFC' }
-                ]
+                ],
+                newListElement: ''
             }
         },
         methods: {
@@ -88,6 +91,14 @@
             },
             removeTodo(id) {
                 this.todoList = this.todoList.filter(todo => todo.id !== id);
+            },
+            addTodo() {
+                if (!this.newListElement) {
+                    alert("Please add a new todo element for the list");
+
+                    return;
+                }
+                this.todoList.push({ id: todoId++, text: this.newListElement });
             }
 
         }
