@@ -1,3 +1,22 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 <div id="app">
-    Hello World!
+    <h1>{{message}}</h1>
+    <p>Count is : {{counter.count}}</p>
 </div>
+
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                message: '1st Declarative rendering withVue!',
+                counter: {
+                    count: 0
+                }
+            }
+        }
+    }).mount('#app')
+
+</script>
