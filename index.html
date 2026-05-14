@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="./style.css">
 <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <div id="app">
     <h1 :class="titleClass">{{message}}</h1>
@@ -42,7 +43,12 @@
 
     <ol>
         <li v-for="todo in todoList" :key="todo.id">
-            {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
+            <span :class="todo.isCompleted ? completedClass : null">{{ todo.text }}</span>
+            <button @click="removeTodo(todo.id)">Remove</button>
+            <input type="checkbox" v-model="todo.isCompleted" @click="applyClass(todo)" />
+            <span class="material-icons">
+                {{todo.isCompleted ? 'done_outline' : 'highlight_off'}}
+            </span>
         </li>
     </ol>
 
@@ -78,18 +84,20 @@
                 awesome: true,
                 showAwesome: true,
                 todoList: [
-                    { id: todoId++, text: 'Explore Vue used through CDN' },
-                    { id: todoId++, text: 'Explore Vue used through Options API' },
-                    { id: todoId++, text: 'Explore Vue used through Vite' },
-                    { id: todoId++, text: 'Explore Vue used through Composition API' },
-                    { id: todoId++, text: 'Explore Vue SPA' },
-                    { id: todoId++, text: 'Explore Vue SFC' }
+                    { id: todoId++, text: 'Explore Vue used through CDN', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Options API', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Vite', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Composition API', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue SPA', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue SFC', isCompleted: false }
                 ],
                 newListElement: '',
                 emptyElmtErrMsgHtml: '',
                 emptyElmtErrMsgClass: 'emptyElmtErrMsg',
                 emptyMsg: false,
-                emptyElmtErrMsg: ''
+                emptyElmtErrMsg: '',
+                completed: false,
+                completedClass: ''
             }
         },
         methods: {
@@ -124,6 +132,23 @@
                 this.newListElement = '';
                 this.emptyMsg = false;
                 this.emptyElmtErrMsg = '';
+            },
+            applyClass(todo) {
+                let foundTodo = this.todoList.filter(t => t.id === todo.id);
+                console.log("Is Array : " + Array.isArray(foundTodo));
+                console.log("Array length : " + foundTodo.length);
+                console.log(foundTodo);
+                if (foundTodo && Array.isArray(foundTodo) && foundTodo.length == 1) {
+                    // this.todoList.forEach(element => {
+                    //     console.log("Todo List before " + element.id + " => " + element.isCompleted);
+                    // });
+                    foundTodo[0].isCompleted = !foundTodo[0].isCompleted;
+                    // this.todoList.forEach(element => {
+                    //     console.log("Todo List after " + element.id + " => " + element.isCompleted);
+                    // });
+                    this.completedClass = 'completed';
+                }
+
             }
 
         }

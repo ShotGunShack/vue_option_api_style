@@ -10,3 +10,7 @@ body {
     color: red;
     font-weight: 700;
 }
+
+.completed {
+    text-decoration: line-through;
+}
