@@ -46,7 +46,7 @@
         </li>
     </ol>
 
-    <form @submit="addTodo">
+    <form @submit.prevent="addTodo">
         <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
         <br />
         <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
@@ -105,9 +105,7 @@
             removeTodo(id) {
                 this.todoList = this.todoList.filter(todo => todo.id !== id);
             },
-            addTodo(e) {
-                //PREVENT THE FORM FROM BEING SUBMITTED AND SHOW | HIDE THE ADDED ELEMENT 
-                e.preventDefault();
+            addTodo() {
                 if (!this.newListElement || this.newListElement.trim() === '') {
                     // alert("Please add a new todo element for the list");
                     //v-html BAD => EXPOSED TO XSS ATTACKS
@@ -121,6 +119,7 @@
                 this.todoList.push({ id: todoId++, text: this.newListElement });
                 //RESET newListElement
                 this.newListElement = '';
+
             }
 
         }
