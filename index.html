@@ -5,6 +5,7 @@
 <div id="app">
     <h1 :class="titleClass">{{message}}</h1>
     <p>Count is : {{counter.count}}</p>
+    <button v-on:click="increment">Increment</button>
 </div>
 
 <script>
@@ -18,6 +19,11 @@
                     count: 0
                 },
                 titleClass: 'title'
+            }
+        },
+        methods: {
+            increment() {
+                this.counter.count++
             }
         }
     }).mount('#app')
