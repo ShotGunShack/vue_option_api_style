@@ -48,7 +48,9 @@
     <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
     <br />
     <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
-    <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span>
+    <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
+
+    <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
     <br />
     <button @click="addTodo">Add Todo</button>
 
@@ -80,7 +82,10 @@
                     { id: todoId++, text: 'Explore Vue SFC' }
                 ],
                 newListElement: '',
-                emptyElmtErrMsgHtml: ''
+                emptyElmtErrMsgHtml: '',
+                emptyElmtErrMsgClass: 'emptyElmtErrMsg',
+                emptyMsg: false,
+                emptyElmtErrMsg: ''
             }
         },
         methods: {
@@ -100,11 +105,16 @@
                 if (!this.newListElement || this.newListElement.trim() === '') {
                     // alert("Please add a new todo element for the list");
                     //v-html BAD => EXPOSED TO XSS ATTACKS
-                    this.emptyElmtErrMsgHtml = "<i>Please add a new todo element for the list</i>";
+                    // this.emptyElmtErrMsgHtml = "<i>Please add a new todo element for the list</i>";
+
+                    this.emptyMsg = true;
+                    this.emptyElmtErrMsg = "A new todo element for the list is required";
 
                     return;
                 }
                 this.todoList.push({ id: todoId++, text: this.newListElement });
+                //RESET newListElement
+                this.newListElement = '';
             }
 
         }

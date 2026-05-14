@@ -5,3 +5,8 @@ body {
 .title {
     color: blue;
 }
+
+.emptyElmtErrMsg {
+    color: red;
+    font-weight: 700;
+}
