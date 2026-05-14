@@ -11,9 +11,15 @@
     <hr />
 
     <form>
-        <input type="text" :value="inputVal" @input="inputVal = $event.target.value" placeholder="Type here" />
+        <input type="text" :value="inputVal" @input="inputVal = $event.target.value"
+            placeholder="Type here => assigned through event" size="50" />
+        <br />
+        <br />
+        <input type="text" :value="inputValThroughMethod" @input="onInput"
+            placeholder="Type here => assigned through method" size="50" />
     </form>
-    <p>{{inputVal}}</p>
+    <p><span style="font-weight: 700 ;">Changed through event :</span> {{inputVal}}</p>
+    <p><span style="font-weight: 700 ;">Changed through method :</span> {{inputValThroughMethod}}</p>
 </div>
 
 <script>
@@ -27,14 +33,17 @@
                     count: 0
                 },
                 titleClass: 'title',
-                inputVal: ''
+                inputVal: '',
+                inputValThroughMethod: ''
             }
         },
         methods: {
             increment() {
                 this.counter.count++
             },
-
+            onInput(event) {
+                this.inputValThroughMethod = event.target.value;
+            }
         }
     }).mount('#app')
 
