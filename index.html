@@ -116,10 +116,14 @@
 
                     return;
                 }
-                this.todoList.push({ id: todoId++, text: this.newListElement });
+                let rawValue = this.newListElement;
+                let valueSpaceRemoved = this.newListElement.trim();
+                console.log(rawValue.length + " <=> " + valueSpaceRemoved.length);
+                this.todoList.push({ id: todoId++, text: valueSpaceRemoved });
                 //RESET newListElement
                 this.newListElement = '';
-
+                this.emptyMsg = false;
+                this.emptyElmtErrMsg = '';
             }
 
         }
