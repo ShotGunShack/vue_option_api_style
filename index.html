@@ -1,7 +1,9 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+<link rel="stylesheet" href="./style.css">
+
 <div id="app">
-    <h1>{{message}}</h1>
+    <h1 :class="titleClass">{{message}}</h1>
     <p>Count is : {{counter.count}}</p>
 </div>
 
@@ -14,7 +16,8 @@
                 message: '1st Declarative rendering withVue!',
                 counter: {
                     count: 0
-                }
+                },
+                titleClass: 'title'
             }
         }
     }).mount('#app')
