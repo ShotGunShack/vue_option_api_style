@@ -42,7 +42,7 @@
     <h1>List rendering</h1>
 
     <ol>
-        <li v-for="todo in todoList" :key="todo.id">
+        <li v-for="todo in showAllOrUncompleted" :key="todo.id">
             <!-- <span :class="todo.isCompleted ? completedClass : null">{{ todo.text }}</span> -->
             <span :class="{completed : todo.isCompleted}">>{{ todo.text }}</span>
 
@@ -56,6 +56,11 @@
             </span>
         </li>
     </ol>
+
+    <br />
+    <button @click="hideCompleted = !hideCompleted">{{hideCompleted ? 'Show All':'Hide Completed'}}</button>
+    <br />
+    <br />
 
     <form @submit.prevent="addTodo">
         <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
@@ -103,6 +108,15 @@
                 emptyElmtErrMsg: '',
                 completed: false,
                 // completedClass: ''
+                hideCompleted: false
+            }
+        },
+        computed: {
+            showAllOrUncompleted() {
+                if (this.hideCompleted === true) {
+                    return this.todoList.filter(todo => !todo.isCompleted);
+                }
+                return this.todoList;
             }
         },
         methods: {
