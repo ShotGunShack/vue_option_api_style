@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="./style.css">
 <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 <div id="app">
     <h1 :class="titleClass">{{message}}</h1>
@@ -41,18 +42,35 @@
     <h1>List rendering</h1>
 
     <ol>
-        <li v-for="todo in todoList" :key="todo.id">
-            {{ todo.text }} <button @click="removeTodo(todo.id)">Remove</button>
+        <li v-for="todo in showAllOrUncompleted" :key="todo.id">
+            <span :class="{completed : todo.isCompleted}">>{{ todo.text }}</span>
+
+            <button @click="removeTodo(todo.id)">Remove</button>
+
+            <input type="checkbox" v-model="todo.isCompleted" />
+
+            <span class="material-icons">
+                {{todo.isCompleted ? 'done_outline' : 'highlight_off'}}
+            </span>
         </li>
     </ol>
-    <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
-    <br />
-    <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
-    <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
 
-    <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
     <br />
-    <button @click="addTodo">Add Todo</button>
+    <button @click="hideCompleted = !hideCompleted">{{hideCompleted ? 'Show All':'Hide Completed'}}</button>
+    <br />
+    <br />
+
+    <form @submit.prevent="addTodo">
+        <input type="text" v-model="newListElement" placeholder="Add a todo in your list" />
+        <br />
+        <!-- v-html BAD => EXPOSED TO XSS ATTACKS -->
+        <!-- <span v-html="emptyElmtErrMsgHtml">BAD => EXPOSED TO XSS ATTACKS</span> -->
+
+        <span v-if="emptyMsg" :class="emptyElmtErrMsgClass">{{emptyElmtErrMsg}}</span>
+        <br />
+        <button>Add Todo</button>
+    </form>
+
 
 </div>
 
@@ -74,18 +92,28 @@
                 awesome: true,
                 showAwesome: true,
                 todoList: [
-                    { id: todoId++, text: 'Explore Vue used through CDN' },
-                    { id: todoId++, text: 'Explore Vue used through Options API' },
-                    { id: todoId++, text: 'Explore Vue used through Vite' },
-                    { id: todoId++, text: 'Explore Vue used through Composition API' },
-                    { id: todoId++, text: 'Explore Vue SPA' },
-                    { id: todoId++, text: 'Explore Vue SFC' }
+                    { id: todoId++, text: 'Explore Vue used through CDN', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Options API', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Vite', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue used through Composition API', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue SPA', isCompleted: false },
+                    { id: todoId++, text: 'Explore Vue SFC', isCompleted: false }
                 ],
                 newListElement: '',
                 emptyElmtErrMsgHtml: '',
                 emptyElmtErrMsgClass: 'emptyElmtErrMsg',
                 emptyMsg: false,
-                emptyElmtErrMsg: ''
+                emptyElmtErrMsg: '',
+                completed: false,
+                hideCompleted: false
+            }
+        },
+        computed: {
+            showAllOrUncompleted() {
+                if (this.hideCompleted === true) {
+                    return this.todoList.filter(todo => !todo.isCompleted);
+                }
+                return this.todoList;
             }
         },
         methods: {
@@ -112,9 +140,14 @@
 
                     return;
                 }
-                this.todoList.push({ id: todoId++, text: this.newListElement });
+                let rawValue = this.newListElement;
+                let valueSpaceRemoved = this.newListElement.trim();
+                console.log(rawValue.length + " <=> " + valueSpaceRemoved.length);
+                this.todoList.push({ id: todoId++, text: valueSpaceRemoved });
                 //RESET newListElement
                 this.newListElement = '';
+                this.emptyMsg = false;
+                this.emptyElmtErrMsg = '';
             }
 
         }
