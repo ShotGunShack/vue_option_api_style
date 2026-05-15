@@ -1,4 +1,5 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="./OtherComp.js"></script>
 
 
 <link rel="stylesheet" href="./style.css">
@@ -95,6 +96,7 @@
     <hr />
     <h1>Components</h1>
     <child-comp></child-comp>
+    <other-comp></other-comp>
 </div>
 
 <script type="module">
@@ -200,7 +202,8 @@
             }
         },
         components: {
-            ChildComp
+            ChildComp,
+            OtherComp: window.OtherComp
         }
     }).mount('#app')
 
