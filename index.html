@@ -95,7 +95,7 @@
 
     <hr />
     <h1>Components</h1>
-    <child-comp></child-comp>
+    <child-comp :child-comp-msg="msgPassToChildComp"></child-comp>
     <other-comp></other-comp>
 </div>
 
@@ -134,7 +134,8 @@
                 hideCompleted: false,
                 todoId: 1,
                 apiData: null,
-                apiNoData404: ''
+                apiNoData404: '',
+                msgPassToChildComp: "This message is passed from the parent component to the child component through props"
             }
         },
         computed: {
