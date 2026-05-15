@@ -1,4 +1,6 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="./OtherComp.js"></script>
+
 
 <link rel="stylesheet" href="./style.css">
 <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
@@ -91,10 +93,15 @@
     <button @click="todoId++" style="margin-right: 10px;" :disabled="!apiData">Increment TodoId</button>
     <button @click="todoId--" style="margin-left: 10px;">Decrement TodoId</button>
 
+    <hr />
+    <h1>Components</h1>
+    <child-comp></child-comp>
+    <other-comp></other-comp>
 </div>
 
-<script>
-    const { createApp } = Vue
+<script type="module">
+    import ChildComp from "./ChildComp.js";
+    const { createApp } = Vue;
 
     let todoId = 0;
 
@@ -193,6 +200,10 @@
                     this.apiNoData404 = 'apiNoDataId';
                 }
             }
+        },
+        components: {
+            ChildComp,
+            OtherComp: window.OtherComp
         }
     }).mount('#app')
 
