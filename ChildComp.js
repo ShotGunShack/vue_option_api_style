@@ -5,5 +5,13 @@ export default {
     `,
     props: {
         childCompMsg: String
+    },
+    emits: ['childCompEvent'],
+    created() {
+        let domParser = new DOMParser();
+        this.$emit(
+            'childCompEvent',
+            "Message sent from Child Component to the parent Component using <b style='color:green;'>$emit()</b>"
+        );
     }
 } 

@@ -95,7 +95,9 @@
 
     <hr />
     <h1>Components</h1>
-    <child-comp :child-comp-msg="msgPassToChildComp"></child-comp>
+    <child-comp :child-comp-msg="msgPassToChildComp" @child-comp-event="(m) => childMsg = m"></child-comp>
+    <p><b>Here is the message received from the child compoenent :</b> <span v-html="childMsg"></span></p>
+
     <other-comp></other-comp>
 </div>
 
@@ -135,7 +137,8 @@
                 todoId: 1,
                 apiData: null,
                 apiNoData404: '',
-                msgPassToChildComp: "This message is passed from the parent component to the child component through props"
+                msgPassToChildComp: "This message is passed from the parent component to the child component through props",
+                childMsg: 'No message received from child component yet'
             }
         },
         computed: {
