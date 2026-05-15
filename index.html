@@ -71,6 +71,9 @@
         <button>Add Todo</button>
     </form>
 
+    <hr />
+    <h1>Lifecycle hooks |Template refs</h1>
+    <p ref="pElementRef">Mounted Lifecycle hook</p>
 
 </div>
 
@@ -116,6 +119,11 @@
                 return this.todoList;
             }
         },
+        mounted() {
+            this.$refs.pElementRef.style.color = 'green';
+            this.$refs.pElementRef.textContent = 'Mounted Lifecycle hook : DOM is ready';
+        },
+
         methods: {
             increment() {
                 this.counter.count++
