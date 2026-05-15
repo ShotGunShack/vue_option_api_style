@@ -14,3 +14,8 @@ body {
 .completed {
     text-decoration: line-through;
 }
+
+#apiNoDataId {
+    font-weight: 700;
+    color: orange;
+}

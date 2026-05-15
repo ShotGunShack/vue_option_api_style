@@ -75,6 +75,22 @@
     <h1>Lifecycle hooks |Template refs</h1>
     <p ref="pElementRef">Mounted Lifecycle hook</p>
 
+    <hr />
+    <h1>Watchers</h1>
+    <span>Watchers are used to react to changes in data properties : </span>
+
+    <p>
+        <b>TodoId has changed to:</b>
+        <i>&nbsp;&nbsp;{{todoId}}</i>
+    </p>
+    <p v-if="!apiData || apiData.id === undefined" :id="apiNoData404">
+        API data's loading
+    </p>
+    <pre v-else><b>API data :</b><br/><br/>{{apiData}}</pre>
+
+    <button @click="todoId++" style="margin-right: 10px;" :disabled="!apiData">Increment TodoId</button>
+    <button @click="todoId--" style="margin-left: 10px;">Decrement TodoId</button>
+
 </div>
 
 <script>
@@ -108,7 +124,10 @@
                 emptyMsg: false,
                 emptyElmtErrMsg: '',
                 completed: false,
-                hideCompleted: false
+                hideCompleted: false,
+                todoId: 1,
+                apiData: null,
+                apiNoData404: ''
             }
         },
         computed: {
@@ -122,8 +141,8 @@
         mounted() {
             this.$refs.pElementRef.style.color = 'green';
             this.$refs.pElementRef.textContent = 'Mounted Lifecycle hook : DOM is ready';
+            this.fectchAPIData();
         },
-
         methods: {
             increment() {
                 this.counter.count++
@@ -156,8 +175,24 @@
                 this.newListElement = '';
                 this.emptyMsg = false;
                 this.emptyElmtErrMsg = '';
+            },
+            async fectchAPIData() {
+                const result = await fetch(`https://jsonplaceholder.typicode.com/todos/${this.todoId}`);
+                this.apiData = await result.json();
             }
 
+        },
+        watch: {
+            todoId(newValue) {
+                console.log("todoId has changed to : " + newValue);
+                this.fectchAPIData();
+            },
+            apiData(newValue) {
+                console.log("apiData has changed todoId <=> apiData.id : " + newValue.id + " => " + newValue.userId + " => " + newValue);
+                if (newValue.id === undefined || newValue === null) {
+                    this.apiNoData404 = 'apiNoDataId';
+                }
+            }
         }
     }).mount('#app')
 
